@@ -18,55 +18,55 @@ pipeline {
                 // }
             }
         }
-        // stage('Build react project') {
-        //     steps{
-        //         sh 'npm run build'
-        //     }
-        // }
-        // stage('Build docker image') {
-        //     steps{
-        //         script {
-        //         	app = docker.build("tiff19/reactapp-test")
-        //         }
-        //     }
-        // }
-        // stage('Test docker image') {
-        //     steps {
-        //         sh 'docker run -d --rm --name testImages -p 8081:80 tiff19/reactapp-test'
-        //         // input message: "Finished test image? (Click proceed to continue)"
-        //     }
-        // }
-        // stage('Clean up docker test') {
-        //     steps {
-        //         sh 'docker stop testImages'
-        //     }
-        // }
-        // stage('Push image to registry') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
-        //                 app.push("${DOCKER_TAG}")
-        //                 app.push("latest")
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Clean up image') {
-        //     steps {
-        //         sh 'docker rmi tiff19/reactapp-test'
+        stage('Build react project') {
+            steps{
+                sh 'npm run build'
+            }
+        }
+        stage('Build docker image') {
+            steps{
+                script {
+                	app = docker.build("tiff19/reactapp-test")
+                }
+            }
+        }
+        stage('Test docker image') {
+            steps {
+                sh 'docker run -d --rm --name testImages -p 8081:80 tiff19/reactapp-test'
+                // input message: "Finished test image? (Click proceed to continue)"
+            }
+        }
+        stage('Clean up docker test') {
+            steps {
+                sh 'docker stop testImages'
+            }
+        }
+        stage('Push image to registry') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
+                        app.push("${DOCKER_TAG}")
+                        app.push("latest")
+                    }
+                }
+            }
+        }
+        stage('Clean up image') {
+            steps {
+                sh 'docker rmi tiff19/reactapp-test'
 
-        //     }
-        // }
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         sh 'chmod +x changeTag.sh'
-        //         sh "./changeTag.sh ${DOCKER_TAG}"
-        //         sshagent(['kubeAccess']) {
-        //             sh "scp -o StrictHostKeyChecking=no reactapp-config-k8s.yml tiffany@34.101.128.202:/home/tiffany/reactapp/"
-        //             sh "ssh tiffany@34.101.128.202 sudo kubectl apply -f reactapp/."
-        //         }
-        //     }
-        // }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'chmod +x changeTag.sh'
+                sh "./changeTag.sh ${DOCKER_TAG}"
+                sshagent(['kubeAccess']) {
+                    sh "scp -o StrictHostKeyChecking=no reactapp-config-k8s.yml tiffany@34.101.128.202:/home/tiffany/reactapp/"
+                    sh "ssh tiffany@34.101.128.202 sudo kubectl apply -f reactapp/."
+                }
+            }
+        }
         // stage('Deployment to Production') {
         //     steps {
         //         milestone(1)
