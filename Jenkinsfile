@@ -13,9 +13,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'start build'
-                nodejs('node'){
+                // nodejs('node'){
                     sh 'npm install'
-                }
+                // }
             }
         }
         // stage('Build react project') {
