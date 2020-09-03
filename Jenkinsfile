@@ -39,12 +39,12 @@ pipeline {
                 }
             }
         }
-        stage('Clean up image') {
-            steps {
-                sh 'docker rmi tiff19/backend-rigup'
+        // stage('Clean up image') {
+        //     steps {
+        //         sh 'docker rmi tiff19/backend-rigup'
 
-            }
-        }
+        //     }
+        // }
         stage('Deploy to Kubernetes') {
             steps {
                 // sh 'chmod +x changeTag.sh'
