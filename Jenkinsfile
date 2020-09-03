@@ -1,11 +1,11 @@
 pipeline {
-    // agent {
-    //     docker {
-    //         image 'node:6-alpine'
-    //         args '-p 3000:3000'
-    //     }
-    // }
-    agent any
+    agent {
+        docker {
+            image 'node:6-alpine'
+            args '-p 3000:3000'
+        }
+    }
+    // agent any
     environment {
         CI = 'true'
     }
@@ -16,11 +16,7 @@ pipeline {
                     sh 'npm install'
             }
         }
-        stage('Build rigup project') {
-            steps{
-                sh 'npm run .'
-            }
-        }
+
         // stage('Build docker image') {
         //     steps{
         //         script {
