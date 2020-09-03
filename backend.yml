@@ -22,7 +22,7 @@ spec:
     spec: 
       containers:
         - name: backend-server
-          image: tiff19/backend-rigup:latest
+          image: tiff19/backend-rigup:${DOCKER_TAG}
           env:
             - name: NQ_DB_HOST
               value: db-rigup
