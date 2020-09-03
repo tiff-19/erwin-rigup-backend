@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Build rigup project') {
             steps{
-                sh 'npm run build'
+                sh 'npm run .'
             }
         }
         // stage('Build docker image') {
