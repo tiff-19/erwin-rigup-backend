@@ -1,10 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine'
-            args '-p 3000:3000'
-        }
-    }
+    // agent {
+    //     docker {
+    //         image 'node:6-alpine'
+    //         args '-p 3000:3000'
+    //     }
+    // }
     agent any
     environment {
         CI = 'true'
@@ -13,9 +13,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'start build'
-                // nodejs('node'){
+                nodejs('node'){
                     sh 'npm install'
-                // }
+                }
             }
         }
         // stage('Build react project') {
