@@ -1,10 +1,4 @@
 pipeline {
-    // agent {
-    //     docker {
-    //         image 'node:6-alpine'
-    //         args '-p 3000:3000'
-    //     }
-    // }
     agent any
     environment {
         CI = 'true'
@@ -51,26 +45,26 @@ pipeline {
 
         //     }
         // }
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         sh 'chmod +x changeTag.sh'
-        //         sh "./changeTag.sh ${DOCKER_TAG}"
-        //         sshagent(['kubeAccess']) {
-        //             sh "scp -o StrictHostKeyChecking=no reactapp-config-k8s.yml tiffany@34.101.128.202:/home/tiffany/reactapp/"
-        //             sh "ssh tiffany@34.101.128.202 sudo kubectl apply -f reactapp/."
-        //         }
-        //     }
-        // }
-        // stage('Deployment to Production') {
-        //     steps {
-        //         milestone(1)
-        //         kubernetesDeploy (
-        //             kubeconfigId: 'kubeconfig',
-        //             configs: 'reactapp-deployment.yml',
-        //             enableConfigSubstitution: true
-        //         )
-        //     }
-        // }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'chmod +x changeTag.sh'
+                sh "./changeTag.sh ${DOCKER_TAG}"
+                sshagent(['kubeAccess']) {
+                    sh "scp -o StrictHostKeyChecking=no backend.yml tiffany@34.101.239.207:/home/tiffany/"
+                    sh "ssh tiffany@34.101.239.207 sudo kubectl apply -f ."
+                }
+            }
+        }
+        stage('Deployment to Production') {
+            steps {
+                milestone(1)
+                kubernetesDeploy (
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'backend.yml',
+                    enableConfigSubstitution: true
+                )
+            }
+        }
     }
 }
 
