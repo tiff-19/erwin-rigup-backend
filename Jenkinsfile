@@ -26,7 +26,7 @@ pipeline {
         // }
         stage('Test docker image') {
             steps {
-                sh 'docker run -d --rm --name testImages -p 8081:80 tiff19/backend-rigup'
+                sh 'docker run -d --rm --name testImages -p 8082:80 tiff19/backend-rigup'
                 input message: "Finished test image? (Click proceed to continue)"
             }
         }
