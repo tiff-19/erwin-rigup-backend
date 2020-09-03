@@ -13,16 +13,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'start build'
-                // nodejs('node'){
                     sh 'npm install'
-                // }
             }
         }
-        // stage('Build react project') {
-        //     steps{
-        //         sh 'npm run build'
-        //     }
-        // }
+        stage('Build rigup project') {
+            steps{
+                sh 'npm run build'
+            }
+        }
         // stage('Build docker image') {
         //     steps{
         //         script {
