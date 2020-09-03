@@ -53,3 +53,53 @@ spec:
     - port: 2001
       targetPort: 2001
       nodePort: 30012
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment
+  namespace: rigup
+  labels:
+    app: rigup
+    type: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rigup
+  template:
+    metadata:
+      namespace: rigup
+      labels:
+        app: rigup
+        type: database
+    spec:
+      containers:
+        - name: database-server
+          image: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: dbrigup
+          ports:
+            - containerPort: 3306
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-rigup
+  namespace: rigup
+  labels:
+    app: rigup
+    type: database
+spec:
+  selector:
+    type: database
+  ports:
+    - port: 3306
+      targetPort: 3306
