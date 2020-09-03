@@ -17,16 +17,16 @@ pipeline {
             }
         }
 
-        stage('Build docker image') {
-            steps{
-                script {
-                	app = docker.build("tiff19/backend-rigup")
-                }
-            }
-        }
+        // stage('Build docker image') {
+        //     steps{
+        //         script {
+        //         	app = docker.build("tiff19/backend-rigup")
+        //         }
+        //     }
+        // }
         stage('Test docker image') {
             steps {
-                sh 'docker run -d --rm --name testImages -p 8081:80 tiff19/reactapp-test'
+                sh 'docker run -d --rm --name testImages -p 8081:80 tiff19/backend-rigup'
                 input message: "Finished test image? (Click proceed to continue)"
             }
         }
