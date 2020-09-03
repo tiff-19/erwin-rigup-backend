@@ -1,9 +1,13 @@
-FROM nginx
+FROM node:6-alpine
 # set work dir
-WORKDIR /usr/share/nginx/html
-# copy file from build directory
-COPY build/ .
-# expose port 80
-EXPOSE 80
-# start naing 
-CMD ["nginx","-g","daemon off;"]
+WORKDIR /usr/src/app
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+
+RUN npm install
+
+# Bundle app source
+COPY . .
+
+EXPOSE 8080
+CMD [ "node", "index.js" ]
