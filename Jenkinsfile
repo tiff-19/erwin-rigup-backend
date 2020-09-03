@@ -12,7 +12,7 @@ pipeline {
         }
 
         stage('Build docker image') {
-            steps{
+            steps {
                 script {
                 	app = docker.build("tiff19/backend-rigup")
                 }
