@@ -51,8 +51,8 @@ pipeline {
                 sh 'chmod +x changeTag.sh'
                 sh "./changeTag.sh ${DOCKER_TAG}"
                 sshagent(['kubeAccess']) {
-                    sh "scp -o StrictHostKeyChecking=no backend-config-k8s.yml tiffany@34.101.239.207:/home/tiffany/"
-                    sh "ssh tiffany@34.101.239.207 sudo kubectl apply -f ."
+                    sh "scp -o StrictHostKeyChecking=no backend-config-k8s.yml tiffany@34.101.241.83:/home/tiffany/"
+                    sh "ssh tiffany@34.101.241.83 sudo kubectl apply -f ."
                 }
             }
         }
