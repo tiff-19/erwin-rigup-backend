@@ -9,7 +9,7 @@ metadata:
     app: rigup
     type: backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       type: backend
